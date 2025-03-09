@@ -21,16 +21,15 @@ dotenv.config({ path: envPath });
 const port = process.env.PORT ? parseInt(process.env.PORT) : 10080;
 const health_port = 3001;
 // Create a basic HTTP server for health check
-import http from 'node:http';
 
-const server = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('AVA Backend Server is running!');
-});
+// const server = http.createServer((req, res) => {
+//   res.writeHead(200, { 'Content-Type': 'text/plain' });
+//   res.end('AVA Backend Server is running!');
+// });
 
-server.listen(health_port, '0.0.0.0', () => {
-  console.log(`Health check server listening on port ${health_port}`);
-});
+// server.listen(health_port, '0.0.0.0', () => {
+//   console.log(`Health check server listening on port ${health_port}`);
+// });
 
 export default defineAgent({
   entry: async (ctx: JobContext) => {
