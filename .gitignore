@@ -185,3 +185,4 @@ docs
 
 # direnv
 .direnv
+.vercel
