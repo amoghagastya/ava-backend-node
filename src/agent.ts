@@ -14,10 +14,9 @@ import dotenv from 'dotenv';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
-
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-// const envPath = path.join(__dirname, '../.env.local');
-// dotenv.config({ path: envPath });
+const envPath = path.join(__dirname, '../.env.local');
+dotenv.config({ path: envPath });
 
 export default defineAgent({
   entry: async (ctx: JobContext) => {
@@ -82,4 +81,22 @@ export default defineAgent({
   },
 });
 
-cli.runApp(new WorkerOptions({ agent: fileURLToPath(import.meta.url) }));
+const port = process.env.PORT ? parseInt(process.env.PORT) : 10080;
+
+// Create a basic HTTP server for health check
+import http from 'node:http';
+
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('AVA Backend Server is running!');
+});
+
+server.listen(1000, '0.0.0.0', () => {
+  console.log(`Health check server listening on port ${port}`);
+});
+
+cli.runApp(new WorkerOptions({
+    agent: fileURLToPath(import.meta.url),
+    host: '0.0.0.0',
+    port: port
+}));

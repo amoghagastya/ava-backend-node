@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint -f unix \"**/*.ts\"",
-    "start": "node dist/agent.js start"
+    "start": "node dist/agent.js start",
+    "dev": "node dist/agent.js dev"
   },
   "packageManager": "pnpm@9.15.6",
   "devDependencies": {
